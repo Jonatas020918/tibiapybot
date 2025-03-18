@@ -54,6 +54,7 @@ class TibiaBotGUI:
         self.setup_potions_tab()
         self.setup_backpacks_tab()
         self.setup_paths_tab()
+        self.setup_spells_tab()
         self.setup_safety_tab()
         
     def setup_general_tab(self):
@@ -161,19 +162,71 @@ class TibiaBotGUI:
         main_frame = ttk.LabelFrame(backpacks_frame, text="Main Backpack", padding="5")
         main_frame.pack(fill="x", padx=5, pady=5)
         
-        ttk.Label(main_frame, text="Hotkey:").grid(row=0, column=0, padx=5, pady=2)
+        ttk.Label(main_frame, text="Position:").grid(row=0, column=0, padx=5, pady=2)
+        self.main_bp_pos = ttk.Combobox(main_frame, values=["First", "Second", "Third", "Fourth"])
+        self.main_bp_pos.grid(row=0, column=1, padx=5, pady=2)
+        self.main_bp_pos.set(self.settings.get("main_bp_pos", "First"))
+        
+        ttk.Label(main_frame, text="Hotkey:").grid(row=1, column=0, padx=5, pady=2)
         self.main_bp_hotkey = ttk.Entry(main_frame)
-        self.main_bp_hotkey.grid(row=0, column=1, padx=5, pady=2)
+        self.main_bp_hotkey.grid(row=1, column=1, padx=5, pady=2)
         self.main_bp_hotkey.insert(0, self.settings.get("main_bp_hotkey", "f3"))
         
-        # Loot Backpack
-        loot_frame = ttk.LabelFrame(backpacks_frame, text="Loot Backpack", padding="5")
+        # Mana Potions Backpack
+        mana_frame = ttk.LabelFrame(backpacks_frame, text="Mana Potions Backpack", padding="5")
+        mana_frame.pack(fill="x", padx=5, pady=5)
+        
+        ttk.Label(mana_frame, text="Position:").grid(row=0, column=0, padx=5, pady=2)
+        self.mana_bp_pos = ttk.Combobox(mana_frame, values=["First", "Second", "Third", "Fourth"])
+        self.mana_bp_pos.grid(row=0, column=1, padx=5, pady=2)
+        self.mana_bp_pos.set(self.settings.get("mana_bp_pos", "Second"))
+        
+        ttk.Label(mana_frame, text="Hotkey:").grid(row=1, column=0, padx=5, pady=2)
+        self.mana_bp_hotkey = ttk.Entry(mana_frame)
+        self.mana_bp_hotkey.grid(row=1, column=1, padx=5, pady=2)
+        self.mana_bp_hotkey.insert(0, self.settings.get("mana_bp_hotkey", "f4"))
+        
+        # Health Potions Backpack
+        health_frame = ttk.LabelFrame(backpacks_frame, text="Health Potions Backpack", padding="5")
+        health_frame.pack(fill="x", padx=5, pady=5)
+        
+        ttk.Label(health_frame, text="Position:").grid(row=0, column=0, padx=5, pady=2)
+        self.health_bp_pos = ttk.Combobox(health_frame, values=["First", "Second", "Third", "Fourth"])
+        self.health_bp_pos.grid(row=0, column=1, padx=5, pady=2)
+        self.health_bp_pos.set(self.settings.get("health_bp_pos", "Third"))
+        
+        ttk.Label(health_frame, text="Hotkey:").grid(row=1, column=0, padx=5, pady=2)
+        self.health_bp_hotkey = ttk.Entry(health_frame)
+        self.health_bp_hotkey.grid(row=1, column=1, padx=5, pady=2)
+        self.health_bp_hotkey.insert(0, self.settings.get("health_bp_hotkey", "f5"))
+        
+        # Gold/Loot Backpack
+        loot_frame = ttk.LabelFrame(backpacks_frame, text="Gold/Loot Backpack", padding="5")
         loot_frame.pack(fill="x", padx=5, pady=5)
         
-        ttk.Label(loot_frame, text="Hotkey:").grid(row=0, column=0, padx=5, pady=2)
+        ttk.Label(loot_frame, text="Position:").grid(row=0, column=0, padx=5, pady=2)
+        self.loot_bp_pos = ttk.Combobox(loot_frame, values=["First", "Second", "Third", "Fourth"])
+        self.loot_bp_pos.grid(row=0, column=1, padx=5, pady=2)
+        self.loot_bp_pos.set(self.settings.get("loot_bp_pos", "Fourth"))
+        
+        ttk.Label(loot_frame, text="Hotkey:").grid(row=1, column=0, padx=5, pady=2)
         self.loot_bp_hotkey = ttk.Entry(loot_frame)
-        self.loot_bp_hotkey.grid(row=0, column=1, padx=5, pady=2)
-        self.loot_bp_hotkey.insert(0, self.settings.get("loot_bp_hotkey", "f4"))
+        self.loot_bp_hotkey.grid(row=1, column=1, padx=5, pady=2)
+        self.loot_bp_hotkey.insert(0, self.settings.get("loot_bp_hotkey", "f6"))
+        
+        # Equipment Backpack
+        equip_frame = ttk.LabelFrame(backpacks_frame, text="Equipment Backpack", padding="5")
+        equip_frame.pack(fill="x", padx=5, pady=5)
+        
+        ttk.Label(equip_frame, text="Position:").grid(row=0, column=0, padx=5, pady=2)
+        self.equip_bp_pos = ttk.Combobox(equip_frame, values=["First", "Second", "Third", "Fourth"])
+        self.equip_bp_pos.grid(row=0, column=1, padx=5, pady=2)
+        self.equip_bp_pos.set(self.settings.get("equip_bp_pos", "First"))
+        
+        ttk.Label(equip_frame, text="Hotkey:").grid(row=1, column=0, padx=5, pady=2)
+        self.equip_bp_hotkey = ttk.Entry(equip_frame)
+        self.equip_bp_hotkey.grid(row=1, column=1, padx=5, pady=2)
+        self.equip_bp_hotkey.insert(0, self.settings.get("equip_bp_hotkey", "f7"))
         
         # Save Button
         ttk.Button(backpacks_frame, text="Save Backpack Settings", 
@@ -202,6 +255,89 @@ class TibiaBotGUI:
                   command=self.play_selected_path).pack(side="left", padx=2)
         ttk.Button(control_frame, text="Delete Selected", 
                   command=self.delete_selected_path).pack(side="left", padx=2)
+        
+    def setup_spells_tab(self):
+        """Setup the spells settings tab"""
+        spells_frame = ttk.Frame(self.notebook)
+        self.notebook.add(spells_frame, text="Spells")
+        
+        # Attack Spells
+        attack_frame = ttk.LabelFrame(spells_frame, text="Attack Spells", padding="5")
+        attack_frame.pack(fill="x", padx=5, pady=5)
+        
+        # Main Attack Spell
+        ttk.Label(attack_frame, text="Main Attack:").grid(row=0, column=0, padx=5, pady=2)
+        self.main_attack = ttk.Entry(attack_frame)
+        self.main_attack.grid(row=0, column=1, padx=5, pady=2)
+        self.main_attack.insert(0, self.settings.get("main_attack", "exori"))
+        
+        ttk.Label(attack_frame, text="Hotkey:").grid(row=0, column=2, padx=5, pady=2)
+        self.main_attack_hotkey = ttk.Entry(attack_frame, width=10)
+        self.main_attack_hotkey.grid(row=0, column=3, padx=5, pady=2)
+        self.main_attack_hotkey.insert(0, self.settings.get("main_attack_hotkey", "1"))
+        
+        # Secondary Attack Spell
+        ttk.Label(attack_frame, text="Secondary:").grid(row=1, column=0, padx=5, pady=2)
+        self.secondary_attack = ttk.Entry(attack_frame)
+        self.secondary_attack.grid(row=1, column=1, padx=5, pady=2)
+        self.secondary_attack.insert(0, self.settings.get("secondary_attack", "exori gran"))
+        
+        ttk.Label(attack_frame, text="Hotkey:").grid(row=1, column=2, padx=5, pady=2)
+        self.secondary_attack_hotkey = ttk.Entry(attack_frame, width=10)
+        self.secondary_attack_hotkey.grid(row=1, column=3, padx=5, pady=2)
+        self.secondary_attack_hotkey.insert(0, self.settings.get("secondary_attack_hotkey", "2"))
+        
+        # Support Spells
+        support_frame = ttk.LabelFrame(spells_frame, text="Support Spells", padding="5")
+        support_frame.pack(fill="x", padx=5, pady=5)
+        
+        # Healing Spell
+        ttk.Label(support_frame, text="Healing:").grid(row=0, column=0, padx=5, pady=2)
+        self.healing_spell = ttk.Entry(support_frame)
+        self.healing_spell.grid(row=0, column=1, padx=5, pady=2)
+        self.healing_spell.insert(0, self.settings.get("healing_spell", "exura"))
+        
+        ttk.Label(support_frame, text="Hotkey:").grid(row=0, column=2, padx=5, pady=2)
+        self.healing_spell_hotkey = ttk.Entry(support_frame, width=10)
+        self.healing_spell_hotkey.grid(row=0, column=3, padx=5, pady=2)
+        self.healing_spell_hotkey.insert(0, self.settings.get("healing_spell_hotkey", "3"))
+        
+        # Strong Healing Spell
+        ttk.Label(support_frame, text="Strong Healing:").grid(row=1, column=0, padx=5, pady=2)
+        self.strong_healing_spell = ttk.Entry(support_frame)
+        self.strong_healing_spell.grid(row=1, column=1, padx=5, pady=2)
+        self.strong_healing_spell.insert(0, self.settings.get("strong_healing_spell", "exura gran"))
+        
+        ttk.Label(support_frame, text="Hotkey:").grid(row=1, column=2, padx=5, pady=2)
+        self.strong_healing_spell_hotkey = ttk.Entry(support_frame, width=10)
+        self.strong_healing_spell_hotkey.grid(row=1, column=3, padx=5, pady=2)
+        self.strong_healing_spell_hotkey.insert(0, self.settings.get("strong_healing_spell_hotkey", "4"))
+        
+        # Haste Spell
+        ttk.Label(support_frame, text="Haste:").grid(row=2, column=0, padx=5, pady=2)
+        self.haste_spell = ttk.Entry(support_frame)
+        self.haste_spell.grid(row=2, column=1, padx=5, pady=2)
+        self.haste_spell.insert(0, self.settings.get("haste_spell", "utani hur"))
+        
+        ttk.Label(support_frame, text="Hotkey:").grid(row=2, column=2, padx=5, pady=2)
+        self.haste_spell_hotkey = ttk.Entry(support_frame, width=10)
+        self.haste_spell_hotkey.grid(row=2, column=3, padx=5, pady=2)
+        self.haste_spell_hotkey.insert(0, self.settings.get("haste_spell_hotkey", "5"))
+        
+        # Magic Shield Spell
+        ttk.Label(support_frame, text="Magic Shield:").grid(row=3, column=0, padx=5, pady=2)
+        self.magic_shield_spell = ttk.Entry(support_frame)
+        self.magic_shield_spell.grid(row=3, column=1, padx=5, pady=2)
+        self.magic_shield_spell.insert(0, self.settings.get("magic_shield_spell", "utamo vita"))
+        
+        ttk.Label(support_frame, text="Hotkey:").grid(row=3, column=2, padx=5, pady=2)
+        self.magic_shield_spell_hotkey = ttk.Entry(support_frame, width=10)
+        self.magic_shield_spell_hotkey.grid(row=3, column=3, padx=5, pady=2)
+        self.magic_shield_spell_hotkey.insert(0, self.settings.get("magic_shield_spell_hotkey", "6"))
+        
+        # Save Button
+        ttk.Button(spells_frame, text="Save Spell Settings", 
+                  command=self.save_spell_settings).pack(pady=10)
         
     def setup_safety_tab(self):
         """Setup the safety settings tab"""
@@ -254,8 +390,16 @@ class TibiaBotGUI:
             "min_hp": self.min_hp.get(),
             "mp_hotkey": self.mp_hotkey.get(),
             "min_mp": self.min_mp.get(),
+            "main_bp_pos": self.main_bp_pos.get(),
             "main_bp_hotkey": self.main_bp_hotkey.get(),
+            "mana_bp_pos": self.mana_bp_pos.get(),
+            "mana_bp_hotkey": self.mana_bp_hotkey.get(),
+            "health_bp_pos": self.health_bp_pos.get(),
+            "health_bp_hotkey": self.health_bp_hotkey.get(),
+            "loot_bp_pos": self.loot_bp_pos.get(),
             "loot_bp_hotkey": self.loot_bp_hotkey.get(),
+            "equip_bp_pos": self.equip_bp_pos.get(),
+            "equip_bp_hotkey": self.equip_bp_hotkey.get(),
             "emergency_hp": self.emergency_hp.get(),
             "emergency_hotkey": self.emergency_hotkey.get(),
             "player_detection": self.player_detection.get()
@@ -322,8 +466,39 @@ class TibiaBotGUI:
         
     def save_backpack_settings(self):
         """Save backpack settings"""
+        self.settings.update({
+            "main_bp_pos": self.main_bp_pos.get(),
+            "main_bp_hotkey": self.main_bp_hotkey.get(),
+            "mana_bp_pos": self.mana_bp_pos.get(),
+            "mana_bp_hotkey": self.mana_bp_hotkey.get(),
+            "health_bp_pos": self.health_bp_pos.get(),
+            "health_bp_hotkey": self.health_bp_hotkey.get(),
+            "loot_bp_pos": self.loot_bp_pos.get(),
+            "loot_bp_hotkey": self.loot_bp_hotkey.get(),
+            "equip_bp_pos": self.equip_bp_pos.get(),
+            "equip_bp_hotkey": self.equip_bp_hotkey.get()
+        })
         self.save_settings()
-        messagebox.showinfo("Success", "Backpack settings saved!")
+        messagebox.showinfo("Success", "Backpack settings saved successfully!")
+        
+    def save_spell_settings(self):
+        """Save spell settings"""
+        self.settings.update({
+            "main_attack": self.main_attack.get(),
+            "main_attack_hotkey": self.main_attack_hotkey.get(),
+            "secondary_attack": self.secondary_attack.get(),
+            "secondary_attack_hotkey": self.secondary_attack_hotkey.get(),
+            "healing_spell": self.healing_spell.get(),
+            "healing_spell_hotkey": self.healing_spell_hotkey.get(),
+            "strong_healing_spell": self.strong_healing_spell.get(),
+            "strong_healing_spell_hotkey": self.strong_healing_spell_hotkey.get(),
+            "haste_spell": self.haste_spell.get(),
+            "haste_spell_hotkey": self.haste_spell_hotkey.get(),
+            "magic_shield_spell": self.magic_shield_spell.get(),
+            "magic_shield_spell_hotkey": self.magic_shield_spell_hotkey.get()
+        })
+        self.save_settings()
+        messagebox.showinfo("Success", "Spell settings saved successfully!")
         
     def save_safety_settings(self):
         """Save safety settings"""
